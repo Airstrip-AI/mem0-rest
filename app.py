@@ -1,3 +1,5 @@
+import os
+
 from dotenv import load_dotenv
 from flask import Blueprint, Flask, jsonify, request
 from mem0 import Memory
@@ -8,7 +10,17 @@ app = Flask(__name__)
 
 api = Blueprint("api", __name__, url_prefix="/v1")
 
-memory = Memory()
+config = {
+    "vector_store": {
+        "provider": "qdrant",
+        "config": {
+            "host": os.environ.get("QDRANT_HOST", "localhost"),
+            "port": os.environ.get("QDRANT_PORT", 6333),
+        },
+    },
+}
+
+memory = Memory.from_config(config)
 
 
 @api.route("/memories", methods=["POST"])

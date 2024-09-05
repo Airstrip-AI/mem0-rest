@@ -1,0 +1,26 @@
+services:
+  qdrant:
+    image: "qdrant/qdrant:latest"
+    container_name: "mem0-qdrant"
+    restart: always
+    volumes:
+      - qdrant_data:/qdrant/storage:z
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+  mem0:
+    container_name: "mem0"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - "4001:5000"
+    depends_on:
+      - qdrant
+    environment:
+      - QDRANT_HOST=qdrant
+
+volumes:
+  qdrant_data:
+    driver: local
