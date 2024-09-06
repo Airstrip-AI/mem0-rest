@@ -61,7 +61,7 @@ def search_memories():
             user_id=body.get("user_id"),
             agent_id=body.get("agent_id"),
             run_id=body.get("run_id"),
-            limit=body.get("limit"),
+            limit=body.get("limit", 100),
             filters=body.get("filters"),
         )
     except Exception as e:
@@ -75,7 +75,7 @@ def get_memories():
             user_id=request.args.get("user_id"),
             agent_id=request.args.get("agent_id"),
             run_id=request.args.get("run_id"),
-            limit=request.args.get("limit"),
+            limit=request.args.get("limit", 100),
         )
     except Exception as e:
         return jsonify({"message": str(e)}), 400
