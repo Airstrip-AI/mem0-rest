@@ -27,9 +27,15 @@ memory = Memory.from_config(config)
 def add_memories():
     try:
         body = request.get_json()
-        messages = body["messages"]
-        del body["messages"]
-        return memory.add(messages, **body)
+        return memory.add(
+            body["messages"],
+            user_id=body.get("user_id"),
+            agent_id=body.get("agent_id"),
+            run_id=body.get("run_id"),
+            metadata=body.get("metadata"),
+            filters=body.get("filters"),
+            prompt=body.get("prompt"),
+        )
     except Exception as e:
         return jsonify({"message": str(e)}), 400
 
@@ -50,9 +56,14 @@ def update_memory(memory_id):
 def search_memories():
     try:
         body = request.get_json()
-        query = body["query"]
-        del body["query"]
-        return memory.search(query, **body)
+        return memory.search(
+            body["query"],
+            user_id=body.get("user_id"),
+            agent_id=body.get("agent_id"),
+            run_id=body.get("run_id"),
+            limit=body.get("limit"),
+            filters=body.get("filters"),
+        )
     except Exception as e:
         return jsonify({"message": str(e)}), 400
 
@@ -60,10 +71,12 @@ def search_memories():
 @api.route("/memories", methods=["GET"])
 def get_memories():
     try:
-        user_id = request.args.get("user_id", None)
-        agent_id = request.args.get("agent_id", None)
-        run_id = request.args.get("run_id", None)
-        return memory.get_all(user_id=user_id, agent_id=agent_id, run_id=run_id)
+        return memory.get_all(
+            user_id=request.args.get("user_id"),
+            agent_id=request.args.get("agent_id"),
+            run_id=request.args.get("run_id"),
+            limit=request.args.get("limit"),
+        )
     except Exception as e:
         return jsonify({"message": str(e)}), 400
 
