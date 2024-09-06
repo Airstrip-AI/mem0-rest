@@ -39,7 +39,7 @@ Not supported yet. This project spins up a Mem0 server and Qdrant for the vector
 
 ```
 curl --request POST \
-  --url http://localhost:4321/v1/memories \
+  --url http://localhost:4321/v1/memories/ \
   --header 'Content-Type: application/json' \
   --data '{
     "messages": [
@@ -58,7 +58,7 @@ curl --request POST \
 
 ```
 curl --request PUT \
-  --url http://localhost:4321/v1/memories/<memory_id> \
+  --url http://localhost:4321/v1/memories/<memory_id>/ \
   --header 'Content-Type: application/json' \
   --data '{"data": "Likes to play tennis on weekends"}'
 ```
@@ -67,7 +67,7 @@ curl --request PUT \
 
 ```
 curl --request POST \
- --url http://localhost:4321/v1/memories/search \
+ --url http://localhost:4321/v1/memories/search/ \
  --header 'Content-Type: application/json' \
  --data '{"query": "What are Alice'\''s hobbies?", "user_id": "user1"}'
 ```
@@ -75,11 +75,11 @@ curl --request POST \
 #### Get all memories
 
 ```
-curl http://localhost:4321/v1/memories
+curl http://localhost:4321/v1/memories/
 ```
 
 #### Get a memory's history
 
 ```
-curl http://localhost:4321/v1/memories/<memory_id>/history
+curl http://localhost:4321/v1/memories/<memory_id>/history/
 ```

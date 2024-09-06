@@ -7,6 +7,7 @@ from mem0 import Memory
 load_dotenv()
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 
 api = Blueprint("api", __name__, url_prefix="/v1")
 
